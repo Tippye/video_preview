@@ -1,17 +1,25 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <VideoPreview :pre-img="require('./assets/1.png')" progress/>
+    <HelloWorld @changeVideo="(v)=>{video=v}"/>
   </div>
 </template>
 
 <script>
 import HelloWorld from './components/HelloWorld.vue'
+import VideoPreview from './components/video_preview'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    HelloWorld,
+    VideoPreview
+  },
+  data() {
+    return {
+      video: null
+    }
   }
 }
 </script>
