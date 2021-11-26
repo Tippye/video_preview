@@ -8,11 +8,14 @@
  */
 export function getVideoPreview(video, size, step) {
     return new Promise(function (resolve) {
+        let p = 0
         let videoElement = document.createElement("video")
         videoElement.src = URL.createObjectURL(video)
         videoElement.currentTime = 0.1
         let canvas = document.createElement("canvas")
         videoElement.addEventListener("loadeddata", () => {
+            p = 0.2
+            console.log(`${Math.floor(p*100)}%`)
             let width = size.width || videoElement.videoWidth,
                 height = size.height || videoElement.videoHeight,
                 videoTime = videoElement.duration,
@@ -30,18 +33,24 @@ export function getVideoPreview(video, size, step) {
                 v.currentTime = i * videoTime / frameNum + 0.1
                 a[i] = v
                 v.addEventListener("loadeddata", () => {
-                    console.log(`   绘制第${i}张图`)
                     canvas.getContext("2d").drawImage(a[i], width * (i % 10), height * Math.floor(i / 10), width, height)
                     a[i] = null
+                    p += 0.79 / step;
+                    console.log(`${Math.floor(p*100)}%`)
                 })
             }
             let interval = setInterval(() => {
                 if (ArrIsNull(a)) {
+                    p = 0.99
+                    console.log(`${Math.floor(p*100)}%`)
+
                     window.clearInterval(interval)
                     // 导出格式为jpeg，图片质量为0.5
                     // 如果需要更清晰的预览图可以将参数改为 'image/png',1
                     let dataURL = canvas.toDataURL('image/jpeg',0.5)
 
+                    p=1
+                    console.log(`${Math.floor(p*100)}%`)
                     resolve(dataURL)
                 }
             },50)
