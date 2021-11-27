@@ -2,6 +2,7 @@
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
     <VideoPreview :pre-img="require('./assets/1.png')" progress/>
+    <VideoPreview :video="video" progress/>
     <HelloWorld @changeVideo="(v)=>{video=v}"/>
   </div>
 </template>
