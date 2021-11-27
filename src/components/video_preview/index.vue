@@ -56,8 +56,6 @@ export default {
   },
   data() {
     return {
-      //鼠标监听器状态
-      mouseListener: false,
       //video_box的样式
       boxStyle: {
         backgroundImage: null,
@@ -78,17 +76,15 @@ export default {
   methods: {
     //鼠标进入图片区域
     mouseenter() {
-      if (this.preImage) this.mouseListener = true
       this.showCover = false
     },
     //鼠标移动
     mousemove(e) {
-      if (!this.mouseListener || e.offsetX < 0 || e.offsetX > this.width || e.offsetY < 0 || e.offsetY > this.height) return
+      if (e.offsetX < 0 || e.offsetX > this.width || e.offsetY < 0 || e.offsetY > this.height || !this.preImage) return
       this.videoProgress = Math.floor(e.offsetX * this.step / this.width);
     },
     //鼠标移出图片区域
     mouseout() {
-      this.mouseListener = false
       this.boxStyle.backgroundPosition = null
       this.showCover = true
     }
